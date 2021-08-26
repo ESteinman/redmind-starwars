@@ -2,10 +2,12 @@ import { Component } from 'react';
 
 export default class Page extends Component {
     state = {
-        page: 1
+        isTrue: [],
+        page: 1,
     }
 
-    nextPage = () => {
+    nextPage = (e) => {
+        e.preventDefault()
         this.props.appState.paginate = true
         this.props.appState.page++
         this.state.page++
@@ -14,16 +16,15 @@ export default class Page extends Component {
 
     render() {
         return (
-            <div class="column" className="d-flex justify-content-center">
+            <div className="column" className="d-flex justify-content-center">
                     {this.state.page < 9 ?
                         (
-                            <button id="nextPage" onclick={this.nextPage}type="submit" color="blue">
+                            <button id="nextPage" onClick={this.nextPage} type="submit">
                                 Next
                             </button>
                         ) : 
                         (
                         <button id="nextPage" color="none">
-
                         </button>
                         )    
                     }         

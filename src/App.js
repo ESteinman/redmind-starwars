@@ -10,8 +10,7 @@ export default class App extends Component {
     isTrue: [],
     page: 1,
     url: "https://swapi.dev/api/people/?page=",
-    searching: false,
-    showPages: [],
+    paginate: []
   }
 
   componentDidMount() {
@@ -24,13 +23,30 @@ export default class App extends Component {
     getData()
   }
 
-  Page = async () => {
-    const page = async () => {
+  componentDidUpdate() {
+    if (this.state.paginate === true) {
+      try {
+          const paginate = this.state.url + this.state.page
+          axios.get(paginate).then((response) => {
+            const data = response.data.results
+            this.setState({data})
+            this.state.paginate = false
+          })
+        }
+      catch (error) {
+        console.log(error)
+        }  
+      }
+  }
+
+  handlePages = async () => {
+    const getData = async () => {
       axios.get(this.state.url + this.state.page).then((response) => {
-        page = response.data.results
-        this.setState({page})
+        const myData = response.data.results
+        this.setState({myData})
       })
     }
+    getData()
   }
 
 
@@ -43,30 +59,32 @@ export default class App extends Component {
             <td>{name}</td>
             <td>{height}</td>
           </tr>
-          <Page appState={this.state} showPages={this.showPages}/>
         </div>
-
-
       )
     })
+
     return (
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Height</th>
-          </tr>
-        </thead>
-        <tbody>
-          {swapiData.length > 0 ? (
-            swapiData
-          ) : (
+      <div>
+        <table>
+          <thead>
             <tr>
-              <td>No data was found</td>
+              <th scope="col">Name</th>
+              <th scope="col">Height</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {swapiData.length > 0 ? (
+              swapiData
+            ) : (
+              <tr>
+                <td>No data was found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <Page appState={this.state} paginate={this.handlePages}/>
+      </div>
+
     )
   }
 }

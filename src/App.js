@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import './App.css';
 import axios from 'axios';
-import Page from "./Page"
+import Page from "./Page";
+import Table from "./Table";
 
 
 export default class App extends Component {
@@ -51,40 +52,9 @@ export default class App extends Component {
 
 
   render() {
-    const swapiData = this.state.data.map((swapiItems) => {
-      let { name, birth_year, height} = swapiItems
-      return (
-        <div>
-          <tr>
-            <td>{name}</td>
-            <td>{height}</td>
-            <td>{birth_year}</td>
-          </tr>
-        </div>
-      )
-    })
-
     return (
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Birth Year</th>
-              <th scope="col">Height</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            {swapiData.length > 0 ? (
-              swapiData
-            ) : (
-              <tr>
-                <td>No data was found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <Table appState={this.state}></Table>
         <Page appState={this.state} paginate={this.handlePages}/>
       </div>
 

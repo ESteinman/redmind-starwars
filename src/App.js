@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import './App.css';
 import axios from 'axios';
+import Page from "./Page"
 
 
 export default class App extends Component {
@@ -10,6 +11,7 @@ export default class App extends Component {
     page: 1,
     url: "https://swapi.dev/api/people/?page=",
     searching: false,
+    showPages: [],
   }
 
   componentDidMount() {
@@ -22,15 +24,29 @@ export default class App extends Component {
     getData()
   }
 
+  Page = async () => {
+    const page = async () => {
+      axios.get(this.state.url + this.state.page).then((response) => {
+        page = response.data.results
+        this.setState({page})
+      })
+    }
+  }
+
 
   render() {
     const swapiData = this.state.data.map((swapiItems) => {
       let { name, height} = swapiItems
       return (
-        <tr>
-          <td>{name}</td>
-          <td>{height}</td>
-        </tr>
+        <div>
+          <tr>
+            <td>{name}</td>
+            <td>{height}</td>
+          </tr>
+          <Page appState={this.state} showPages={this.showPages}/>
+        </div>
+
+
       )
     })
     return (

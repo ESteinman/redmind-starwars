@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Page from "./Page";
 import Table from "./Table";
-
+import Search from './Search';
 
 export default class App extends Component {
   state = {
@@ -11,7 +11,8 @@ export default class App extends Component {
     isTrue: [],
     page: 1,
     url: "https://swapi.dev/api/people/?page=",
-    paginate: []
+    paginate: [],
+    search: false
   }
 
   componentDidMount() {
@@ -25,20 +26,35 @@ export default class App extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.paginate === true) {
+    if (this.state.isTrue[0] === true) {
       try {
-          const paginate = this.state.url + this.state.page
-          axios.get(paginate).then((response) => {
-            const data = response.data.results
-            this.setState({data})
-            this.state.paginate = false
-          })
-        }
+        const search = this.state.data[0].searchterm
+        axios.get(search).then((response) => {
+          const data = response.data.results
+          this.setState({data})
+          this.state.isTrue = false
+        })
+      }
       catch (error) {
         console.log(error)
         }  
       }
+      else if ( this.state.paginate === true
+        )
+        try {
+            const paginate = this.state.url + this.state.page
+            axios.get(paginate).then((response) => {
+              const data = response.data.results
+              this.setState({data})
+              this.state.paginate = false
+            })
+          }
+        catch (error) {
+          console.log(error)
+        }
+
   }
+
 
   handlePages = async () => {
     const getData = async () => {
@@ -50,12 +66,26 @@ export default class App extends Component {
     getData()
   }
 
+  addSearchResults = async (searchData) => {
+    try 
+      {
+      const searchResults = await axios.get(searchData.searchterm)
+      const data = searchResults.data.results
+      this.setState({data, search: true})
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
 
   render() {
     return (
       <div>
-        <Table appState={this.state}></Table>
+        <Table appState={this.state} searchResults={this.addSearchResults}></Table>
         <Page appState={this.state} paginate={this.handlePages}/>
+        <Search appState={this.state}searchResults={this.addSearchResults} ></Search>
       </div>
 
     )

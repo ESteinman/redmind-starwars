@@ -1,8 +1,20 @@
-import { Component} from 'react'
+import axios from 'axios'
+import { Component } from 'react'
 
 export default class Table extends Component {
+    componentDidUpdate() {
+        if (this.props.appState.isTrue[0] === true) {
+            const search = this.props.appState.data.url
+            axios.get(search).then((response) => {
+                const data = response.data.results
+                this.setState({data})
+                this.props.appState.isTrue=false
+            })
+        }
+    }
+
     render() {
-        const swapiData = this.state.data.map((swapiItems) => {
+        const swapiData = this.props.appState.data.map((swapiItems) => {
             let { name, birth_year, height, homeworld, mass, species} = swapiItems
             return (
             <div>

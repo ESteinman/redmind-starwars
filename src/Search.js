@@ -25,26 +25,27 @@ export default class Search extends Component {
 
     render() {
         return (
-            <div className="searchBar">
-                <form className="searchInput">
-                    <div className="form-row align-center">
-                        <div className="col-auto">
-                            <label>Search</label>
-                            <input 
-                                type="text" 
-                                className="for-control ml-2" 
-                                id="inlineFormInput" 
-                                placeholder="Search" 
-                                onChange={this.inputData}>
-                            </input>
-                            <div className="col-auto" id="searchButton">
+            <div className="searchContainer">
+                <div className="searchBar">
+                    <form className="searchInput">
+                        <div className="form-row align-center">
+                            <div className="col-auto">
+                                <label>Search</label>
+                                <input 
+                                    type="text" 
+                                    className="for-control ml-2" 
+                                    id="inlineFormInput" 
+                                    placeholder="Search" 
+                                    onChange={this.inputData}>
+                                </input>
+                            <div className="col-auto" id="searchBtnDiv">
                                 <button onClick={this.handleSubmit}
-                                type="submit">
+                                type="submit" className="btn btn-light btn-sm mb-1">
                                     Submit
                                 </button>
                                 {this.props.appState.search === true ? (
                                 <div className="col-auto" id="resetDataButton">
-                                    <button onClick={this.resetData} type="submut">
+                                    <button onClick={this.resetData} type="submit" className="tn btn-light btn-sm mb-1 ml-2">
                                         Back to All Data    
                                     </button>
                                 </div>
@@ -53,13 +54,11 @@ export default class Search extends Component {
                                     </button>
                                 )
                                 }
-
                             </div>
-                            
+                            </div>
                         </div>
-                    </div>
-
-                </form>
+                    </form>
+                </div>
             </div>
         )
     }

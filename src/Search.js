@@ -18,6 +18,11 @@ export default class Search extends Component {
         document.querySelector(".searchInput").reset()
     }
 
+    resetData = () => {
+        let defaultData = "https://swapi.dev/api/people"
+        this.props.searchResults({defaultData})
+    }
+
     render() {
         return (
             <div className="searchBar">
@@ -37,7 +42,20 @@ export default class Search extends Component {
                                 type="submit">
                                     Submit
                                 </button>
+                                {this.props.appState.search === true ? (
+                                <div className="col-auto" id="resetDataButton">
+                                    <button onClick={this.resetData} type="submut">
+                                        Back to All Data    
+                                    </button>
+                                </div>
+                                ) : (
+                                    <button id="searchButton" type="submit" className="disabled">
+                                    </button>
+                                )
+                                }
+
                             </div>
+                            
                         </div>
                     </div>
 

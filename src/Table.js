@@ -8,7 +8,7 @@ export default class Table extends Component {
             axios.get(search).then((response) => {
                 const data = response.data.results
                 this.setState({data})
-                this.props.appState.isTrue=false
+                this.props.appState.isTrue = false
             })
         }
     }

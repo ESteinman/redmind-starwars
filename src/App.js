@@ -10,9 +10,9 @@ export default class App extends Component {
     data: [],
     isTrue: [],
     page: 1,
-    url: "https://swapi.dev/api/people/?page=",
+    url: `https://swapi.dev/api/people/?page=`,
     paginate: [],
-    search: false
+    search: false,
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class App extends Component {
   componentDidUpdate() {
     if (this.state.isTrue[0] === true) {
       try {
-        const search = this.state.data[0].searchterm
+        const search = this.state.data[0].searchInput
         axios.get(search).then((response) => {
           const data = response.data.results
           this.setState({data})
@@ -39,20 +39,37 @@ export default class App extends Component {
         console.log(error)
         }  
       }
-      else if ( this.state.paginate === true
-        )
+      else if (this.state.paginate === true) {
         try {
-            const paginate = this.state.url + this.state.page
-            axios.get(paginate).then((response) => {
-              const data = response.data.results
-              this.setState({data})
-              this.state.paginate = false
-            })
-          }
-        catch (error) {
-          console.log(error)
+          const paginate = this.state.url + this.state.page
+          axios.get(paginate).then((response) => {
+            const data = response.data.results
+            this.setState({data})
+            this.state.paginate = false
+          })
         }
+      catch (error) {
+        console.log(error)
+      }
+      }
+  }
 
+  addSearchResults = async (searchData) => {
+    try 
+      {
+      const searchResults = await axios.get(searchData.searchInput)
+      const data = searchResults.data.results
+      this.setState({data, search: true,})
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  isTrue = (toggle) => {
+    this.setState({
+      isTrue: [toggle],
+    })
   }
 
 
@@ -66,26 +83,15 @@ export default class App extends Component {
     getData()
   }
 
-  addSearchResults = async (searchData) => {
-    try 
-      {
-      const searchResults = await axios.get(searchData.searchterm)
-      const data = searchResults.data.results
-      this.setState({data, search: true})
-    } 
-    catch (error) {
-      console.log(error)
-    }
-  }
 
 
 
   render() {
     return (
       <div>
-        <Table appState={this.state} searchResults={this.addSearchResults}></Table>
+        <Table appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Table>
         <Page appState={this.state} paginate={this.handlePages}/>
-        <Search appState={this.state}searchResults={this.addSearchResults} ></Search>
+        <Search appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Search>
       </div>
 
     )

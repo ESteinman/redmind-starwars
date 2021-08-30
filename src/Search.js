@@ -4,17 +4,17 @@ export default class Search extends Component {
     state = {}
 
     inputData = (s) => {
-        const apicall = s.apicall
-        const searchinput = apicall.searchinput
-        let searchterm = 'https://swapi.dev/api/people/?search=${searchinput}'
-        this.setState({searchterm})
+        const target = s.target
+        const value = target.value
+        let searchInput = `https://swapi.dev/api/people/?search=${value}`
+        this.setState({searchInput})
     }
     
     
     handleSubmit = (s) => {
         s.preventDefault()
-        this.props.addSearchData(this.state)
-        this.props.showSearchData(true)
+        this.props.searchResults(this.state)
+        this.props.toggleResults(true)
         document.querySelector(".searchInput").reset()
     }
 

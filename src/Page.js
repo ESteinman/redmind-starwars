@@ -4,6 +4,7 @@ export default class Page extends Component {
     state = {
         isTrue: [],
         page: 1,
+        search: this.props.appState.search,
     }
 
     nextPage = (defaultpage) => {
@@ -25,7 +26,7 @@ export default class Page extends Component {
     render() {
         return (
             <div className="column" className="d-flex justify-content-center">
-                {this.state.page > 1 ? 
+                {this.state.page > 1 ?? this.props.appState.search === false ?
                     (
                         <button id="previousPage" onClick={this.previousPage} type="submit">
                             Previous
@@ -37,7 +38,7 @@ export default class Page extends Component {
                         </button>
                     )
                 }
-                    {this.state.page < 9 ?
+                    {this.state.page < 9 && this.props.appState.search === false ?
                         (
                             <button id="nextPage" onClick={this.nextPage} type="submit">
                                 Next

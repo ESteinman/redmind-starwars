@@ -25,30 +25,34 @@ export default class Page extends Component {
 
     render() {
         return (
-            <div className="column" className="d-flex justify-content-center">
-                {this.state.page > 1 ?? this.props.appState.search === false ?
-                    (
-                        <button id="previousPage" onClick={this.previousPage} type="submit">
-                            Previous
-                        </button>
-                    ) :
-                        
-                    (
-                        <button id="previousPage" color="none">
-                        </button>
-                    )
-                }
-                    {this.state.page < 9 && this.props.appState.search === false ?
+            <div className="column">
+                <div className="d-flex justify-content-center">
+                    <div className="col-auto center">
+                    {this.state.page > 1 ?? this.props.appState.search === false ?
                         (
-                            <button id="nextPage" onClick={this.nextPage} type="submit">
-                                Next
+                            <button id="previousPage" onClick={this.previousPage} type="submit">
+                                Previous
                             </button>
-                        ) : 
+                        ) :
+                            
                         (
-                        <button id="nextPage" color="none">
-                        </button>
-                        )    
-                    }         
+                            <button id="previousPage" color="none">
+                            </button>
+                        )
+                    }
+                        {this.state.page < 9 && this.props.appState.search === false ?
+                            (
+                                <button id="nextPage" onClick={this.nextPage} type="submit">
+                                    Next
+                                </button>
+                            ) : 
+                            (
+                            <button id="nextPage" color="none">
+                            </button>
+                            )    
+                        } 
+                        </div>
+                </div>       
             </div>
 
         )

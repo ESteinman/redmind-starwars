@@ -5,6 +5,7 @@ import Page from "./Page";
 import Table from "./Table";
 import Search from './Search';
 import { Responsive, BigScreen, Desktop, Laptop, Mobile, TabletMobile } from './responsive/Responsive';
+import Header from './Header';
 
 
 
@@ -93,7 +94,7 @@ export default class App extends Component {
     return (
       
         <div className="app">
-          <h1>Star Wars API</h1>
+          <Header/>
           {Responsive.isMobileDevice && <Mobile></Mobile>}
       {Responsive.isTabletDevice && <> 
       <TabletMobile/>

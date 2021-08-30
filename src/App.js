@@ -4,6 +4,9 @@ import axios from 'axios';
 import Page from "./Page";
 import Table from "./Table";
 import Search from './Search';
+import { Responsive, BigScreen, Desktop, Laptop, Mobile, TabletMobile } from './responsive/Responsive';
+
+
 
 export default class App extends Component {
   state = {
@@ -88,12 +91,20 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Table appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Table>
-        <Page appState={this.state} paginate={this.handlePages}/>
-        <Search appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Search>
-      </div>
-
-    )
+      
+        <div className="app">
+          <h1>Star Wars API</h1>
+          {Responsive.isMobileDevice && <Mobile></Mobile>}
+      {Responsive.isTabletDevice && <> 
+      <TabletMobile/>
+      {Responsive.isDesktop && <Desktop></Desktop>}
+      {Responsive.isLaptop && <Laptop></Laptop>}
+      {Responsive.isBigScreen && <BigScreen></BigScreen>}
+      </>}
+          <Table appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Table>
+          <Page appState={this.state} paginate={this.handlePages}/>
+          <Search appState={this.state} searchResults={this.addSearchResults} toggleResults={this.isTrue}></Search>
+        </div>
+    );
   }
 }
